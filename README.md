@@ -237,9 +237,9 @@ bangla-voice-extension/
 ---
 
 ## 🙏 Credits
-
+- **Developer**: [Bishnu Kundu](https://bisnukundu.netlify.app/) 
 - **Speech Recognition**: [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) by W3C
-- **Translation**: [Google Translate](https://translate.google.com) (unofficial public endpoint)
+- **Translation**: [Google Translate](https://translate.google.com)
 - **Font**: [Noto Sans Bengali](https://fonts.google.com/noto/specimen/Noto+Sans+Bengali) by Google Fonts
 
 ---
