@@ -28,7 +28,7 @@
 
   // ─── Punctuation auto-add ──────────────────────
   const BN_SENTENCE_ENDERS = ['করুন', 'হয়', 'আছে', 'ছিল', 'হবে', 'দিন', 'নিন', 'যান', 'আসুন', 'বলুন', 'দেখুন', 'পড়ুন', 'লিখুন', 'শুনুন', 'জানুন', 'বুঝুন', 'ভালো', 'ধন্যবাদ', 'শুভেচ্ছা'];
-  const BN_QUESTION_WORDS = ['কি', 'কী', 'কেন', 'কোথায়', 'কখন', 'কিভাবে', 'কীভাবে', 'কে', 'কার', 'কাকে', 'কাদের', 'কোন', 'কতটুকু', 'কতজন'];
+  const BN_QUESTION_WORDS = ['কি', 'কী', 'কেন', 'কোথায়', 'কখন', 'কিভাবে', 'কীভাবে', 'কে', 'কার', 'কাকে', 'কাদের', 'কোন', 'কতটুকু', 'কতজন', 'খেয়েছো', 'করছো'];
 
   function autoPunctuate(text, lang) {
     if (!settings.autoPunct) return text;
@@ -162,30 +162,30 @@
   `;
   document.body.appendChild(root);
 
-  const widget       = document.getElementById('bvt-widget');
-  const micBtn        = document.getElementById('bvt-mic');
-  const statusEl      = document.getElementById('bvt-status');
-  const emojiBtn      = document.getElementById('bvt-emoji-btn');
-  const emojiPanel    = document.getElementById('bvt-emoji-panel');
-  const emojiGrid     = document.getElementById('bvt-emoji-grid');
-  const translateBtn  = document.getElementById('bvt-translate-btn');
-  const translatePanel= document.getElementById('bvt-translate-panel');
-  const tlInput       = document.getElementById('bvt-tl-input');
-  const tlGo          = document.getElementById('bvt-tl-go');
-  const tlOutput      = document.getElementById('bvt-tl-output');
-  const tlOutputWrap  = document.getElementById('bvt-tl-output-wrap');
-  const tlCopy        = document.getElementById('bvt-tl-copy');
-  const tlInsert      = document.getElementById('bvt-tl-insert');
-  const tlFromSel     = document.getElementById('bvt-tl-from');  // <select>
-  const tlToSel       = document.getElementById('bvt-tl-to');    // <select>
-  const tlSwap        = document.getElementById('bvt-tl-swap');
+  const widget = document.getElementById('bvt-widget');
+  const micBtn = document.getElementById('bvt-mic');
+  const statusEl = document.getElementById('bvt-status');
+  const emojiBtn = document.getElementById('bvt-emoji-btn');
+  const emojiPanel = document.getElementById('bvt-emoji-panel');
+  const emojiGrid = document.getElementById('bvt-emoji-grid');
+  const translateBtn = document.getElementById('bvt-translate-btn');
+  const translatePanel = document.getElementById('bvt-translate-panel');
+  const tlInput = document.getElementById('bvt-tl-input');
+  const tlGo = document.getElementById('bvt-tl-go');
+  const tlOutput = document.getElementById('bvt-tl-output');
+  const tlOutputWrap = document.getElementById('bvt-tl-output-wrap');
+  const tlCopy = document.getElementById('bvt-tl-copy');
+  const tlInsert = document.getElementById('bvt-tl-insert');
+  const tlFromSel = document.getElementById('bvt-tl-from');  // <select>
+  const tlToSel = document.getElementById('bvt-tl-to');    // <select>
+  const tlSwap = document.getElementById('bvt-tl-swap');
 
   // ─── Translate Language Logic ──────────────────────────────────
   // Swap: exchange the two dropdown values, move result back to input
   tlSwap.addEventListener('click', (e) => {
     e.stopPropagation();
     const prevFrom = tlFromSel.value;
-    const prevTo   = tlToSel.value;
+    const prevTo = tlToSel.value;
     // Move translated text back to input
     const outText = tlOutput.textContent.trim();
     if (outText) {
@@ -195,9 +195,9 @@
     }
     // Swap dropdown selections (can't set 'auto' as target)
     const newFrom = prevTo === 'auto' ? 'bn' : prevTo;
-    const newTo   = prevFrom === 'auto' ? 'bn' : prevFrom;
+    const newTo = prevFrom === 'auto' ? 'bn' : prevFrom;
     tlFromSel.value = newFrom;
-    tlToSel.value   = newTo;
+    tlToSel.value = newTo;
   });
 
   // Set dropdowns to sensible defaults when opening panel (but don't override user choices)
@@ -205,11 +205,11 @@
   function syncTlFromVoiceLang() {
     if (tlDefaultsSet) return;  // user has already chosen — don't override
     if (currentLang === 'bn-BD') { tlFromSel.value = 'auto'; tlToSel.value = 'bn'; }
-    else                          { tlFromSel.value = 'auto'; tlToSel.value = 'en'; }
+    else { tlFromSel.value = 'auto'; tlToSel.value = 'en'; }
   }
   // Once user touches either dropdown, lock them
   tlFromSel.addEventListener('change', () => { tlDefaultsSet = true; });
-  tlToSel.addEventListener('change',   () => { tlDefaultsSet = true; });
+  tlToSel.addEventListener('change', () => { tlDefaultsSet = true; });
 
   // Open / close translate panel
   translateBtn.addEventListener('click', (e) => {
@@ -235,7 +235,7 @@
 
   // Translate function — reads language directly from dropdowns
   async function doTranslate() {
-    const text   = tlInput.value.trim();
+    const text = tlInput.value.trim();
     const srcLang = tlFromSel.value;
     const tgtLang = tlToSel.value;
     if (!text) return;
@@ -246,7 +246,7 @@
 
     try {
       const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${srcLang}&tl=${tgtLang}&dt=t&q=${encodeURIComponent(text)}`;
-      const res  = await fetch(url);
+      const res = await fetch(url);
       const data = await res.json();
       const translated = data[0].map(seg => seg[0]).join('');
       tlOutput.textContent = translated;
@@ -375,12 +375,12 @@
   function applyTheme(themeName, customColors) {
     const t = THEMES[themeName] || THEMES.dark;
     // Override theme values with custom colors if provided
-    const bg     = (customColors && customColors.widgetBg)    || t.bg;
+    const bg = (customColors && customColors.widgetBg) || t.bg;
     const border = (customColors && customColors.borderColor) ? customColors.borderColor + '88' : t.border;
-    const mic    = (customColors && customColors.micBg)       || t.mic;
+    const mic = (customColors && customColors.micBg) || t.mic;
     const accent = (customColors && customColors.accentColor) || t.accent;
-    const text   = (customColors && customColors.textColor)   || t.text;
-    const sub    = t.sub;
+    const text = (customColors && customColors.textColor) || t.text;
+    const sub = t.sub;
     const accentB = t.accentB;
     const surface = t.surface;
     document.getElementById('bvt-theme-style').textContent = `
@@ -616,6 +616,15 @@
     e.stopPropagation(); // prevent parent click
     if (isListening) stopListening();
     else startListening();
+  });
+
+  // ─── Keyboard Shortcut ────────────────────────────────────────
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.code === 'Space') {
+      e.preventDefault(); // Prevent page scrolling down
+      if (isListening) stopListening();
+      else startListening();
+    }
   });
 
 })();
